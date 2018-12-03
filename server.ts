@@ -10,11 +10,12 @@ import { sequelize } from './database';
 import { regdocs } from './routes/regdocRouter';
 
 const hostname = 'localhost';
-const port = 3000;
+const port = parseInt(process.env.PORT) || 3000;
 const server = express();
 
-
 server.set('Secret', env.secret);
+
+server.enable('trust proxy');
 
 // log requests to console via morgan
 server.use(morgan('dev'));
@@ -27,27 +28,29 @@ server.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 server.use(bodyParser.json());
 
-
 // cors 
-server.use(cors({
-  credentials: true, 
-  origin: '*',//'http://localhost:4200',
-  methods: 'GET,POST,OPTIONS,PUT,PATCH,DELETE',
-  allowedHeaders: 'X-Requested-With,Authorization,Content-Type'
-}));
-// server.use(function(req,res,next) {
-//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-//   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,PATCH,DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-//   res.setHeader('Access-Control-Allow-Credentials', 0);
-//   next();
-// });
+
+// server.use(cors({
+//   credentials: true,
+//   origin: 'https://frontend-dot-reg-docs-api-v1.appspot.com',//'http://localhost:4200',
+//   methods: 'GET,POST,OPTIONS,PUT,PATCH,DELETE',
+//   allowedHeaders: 'X-Requested-With,Authorization,Content-Type'
+// }));
+server.use(function(req,res,next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,PUT,PATCH,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Authorization,Content-Type');
+  res.setHeader('Access-Control-Allow-Credentials', 1);
+  next();
+});
+
 
 server.get('/api/test', (req, res, next) => {
   res.statusCode = 200;
   res.setHeader('Content-Type', 'text/plain');
   res.end('Hello Dude');
 });
+
 
 server.post('/api/authenticate', (req, res) => {
   if (req.body.username==='beau')
@@ -79,20 +82,17 @@ server.post('/api/authenticate', (req, res) => {
 });
 
 
-
 // handle errors
 server.use(errorHandler);
 
 
 const mysequelize = sequelize;
 
-
-
 // setup api + jwt authentication
 server.use('/api/regdocs', regdocs);
 
 
-
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+server.listen(port, () => {
+//  console.log(`Server running at http://${hostname}:${port}/`);
+  console.log(`Server listing on port ${port}`);
 });

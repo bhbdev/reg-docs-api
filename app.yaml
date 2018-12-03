@@ -1,1 +1,15 @@
 runtime: nodejs10
+
+service: api
+
+# do not add to source control
+env_variables:
+  SQL_USER: postgres
+  SQL_PASSWORD: G6G9mPHm6pt57w5v
+  SQL_DATABASE: regdocs
+  SQL_PORT: 5432
+  SQL_HOST: 127.0.0.1
+  INSTANCE_CONNECTION_NAME: reg-docs-api-v1:us-east1:regdocs
+  
+beta_settings:
+  cloud_sql_instances: reg-docs-api-v1:us-east1:regdocs

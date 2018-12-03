@@ -8,8 +8,8 @@ export const sequelize = new Sequelize({
   dialect: env.dialect,
   username: env.username,
   password: env.password,
-  host: env.host,
-  port: env.port
+  host: env.host
+//,  port: parseInt(env.port)
 });
 
 sequelize.addModels([RegDoc]);

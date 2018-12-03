@@ -11,6 +11,7 @@ regdocs.use((req, res, next) => {
     next();
     return;
   }
+  console.log('authenticating...');
   //TODO:  Change this to use Authorization: Bearer   or express-jwt()
   var token = null;
   var authpacket = (<string>req.headers.authorization).split(' ');
