@@ -5,7 +5,7 @@ service: api
 # do not add to source control
 env_variables:
   SQL_USER: postgres
-  SQL_PASSWORD: G6G9mPHm6pt57w5v
+  SQL_PASSWORD: 
   SQL_DATABASE: regdocs
   SQL_PORT: 5432
   SQL_HOST: 127.0.0.1
