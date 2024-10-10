@@ -14,10 +14,6 @@ export const env =
   password: process.env.SQL_PASSWORD,
   host: sqlhost,
   port: process.env.SQL_PORT,
-//  username : 'docsuser', //  pwd             |  connection name
-//  password : 'Dx@z23af!',//G6G9mPHm6pt57w5v  |  reg-docs-api-v1:us-east1:regdocs
-//  host : 'localhost', //fs
-//  port : 5432,
-  secret: 'B@^grmJT!47]dtT8Nk&z96$;8wTVmtdQ_'
+  secret: process.env.SECRET
 };
 
